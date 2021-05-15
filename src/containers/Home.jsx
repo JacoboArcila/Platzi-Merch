@@ -4,8 +4,11 @@ import Products from '../components/Products';
 
 function Home() {
   return (
-    <Products Products={initialState.products} />
-  )
-};
+    <div>
+      <h1>Hola</h1>
+      <Products products={initialState.products} />
+    </div>
+  );
+}
 
 export default Home;
