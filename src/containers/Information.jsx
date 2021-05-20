@@ -9,6 +9,22 @@ function Information() {
 
   const {cart} = state;
 
+  const handleSubmit = () => {
+    const formData = new FormData(form.current);
+    const buyer = {
+      'name': formData.get('name'),
+      'email': formData.get('email'),
+      'address': formData.get('address'),
+      'apto': formData.get('apto'),
+      'city': formData.get('city'),
+      'country': formData.get('country'),
+      'state': formData.get('state'),
+      'cp': formData.get('cp'),
+      'phone': formData.get('phone'),
+    }
+    addToBuyer(buyer);
+
+  }
 
   return (
     <div className="Information">
@@ -37,7 +53,7 @@ function Information() {
           </div>
           <Link to="/checkout/payment">
           <div className="Information-next">
-            Pagar
+            <button type="button" onClick={handleSubmit} >Pagar</button>
           </div>
           </Link>
         </div>

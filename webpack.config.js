@@ -8,6 +8,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
     publicPath: '/',
+    devtool: 'source-map'
   },
   resolve: {
     extensions: ['.js', '.jsx'],
