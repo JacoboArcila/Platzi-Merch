@@ -1,11 +1,12 @@
 import React, { useContext, useRef } from 'react';
-import {Link} from 'react-router-dom'; 
+import {Link, useHistory} from 'react-router-dom'; 
 import AppContext from '../context/AppContext';
 import '../styles/components/Information.css';
 
 function Information() {
   const {state, addToBuyer} = useContext(AppContext);
   const form = useRef(null);
+  const history = useHistory();
 
   const {cart} = state;
 
@@ -23,7 +24,7 @@ function Information() {
       'phone': formData.get('phone'),
     }
     addToBuyer(buyer);
-
+    history.push('/checkout/payment');
   }
 
   return (
@@ -63,7 +64,7 @@ function Information() {
         {cart.map((item) => (
           <div className="Information-item" key={item.title}>
           <div className="Information-element">
-            <h4>{item.titel}</h4>
+            <h4>{item.title}</h4>
             <span>
               $
               {item.price}
