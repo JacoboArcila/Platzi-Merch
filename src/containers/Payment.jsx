@@ -1,15 +1,14 @@
 import React, { useContext } from 'react';
-import '../styles/components/Payment.css';
-import {PayPalButton} from 'react-paypal-button';
+import { PayPalButton } from 'react-paypal-button';
 import AppContext from '../context/AppContext';
+import '../styles/components/Payment.css';
 
+const Payment = ({ history }) => {
+  const { state, addNewOrder } = useContext(AppContext);
+  const { cart, buyer } = state;
 
-function Payment(history) {
-  const {state, addNewOrder} = useContext(AppContext);
-  const {cart, buyer} = state;
-
-  const paypalOptions = {
-    clientId: "AamJtBQe_q0VshgBEMFpnOMvn2ssn32hOmlJxGtbbvSvmp7V6m32n7yF2ZEGftPbTrql8sa-vhmt4XgD",
+  const paypalOtions = {
+    clientId: 'AamJtBQe_q0VshgBEMFpnOMvn2ssn32hOmlJxGtbbvSvmp7V6m32n7yF2ZEGftPbTrql8sa-vhmt4XgD',
     intent: 'capture',
     currency: 'USD'
   }
@@ -20,15 +19,14 @@ function Payment(history) {
   }
 
   const handlePaymentSuccess = (data) => {
-    console.log(data);
-    if(data.status === 'COMPLETED') {
+    if (data.status === 'COMPLETED') {
       const newOrder = {
         buyer,
         product: cart,
         payment: data
       }
       addNewOrder(newOrder);
-      history.push('/checkout/success');
+      history.push('/checkout/success')
     }
   }
 
@@ -41,10 +39,10 @@ function Payment(history) {
   return (
     <div className="Payment">
       <div className="Payment-content">
-        <h3>Resumen del pedido</h3>
+        <h3>Resument del pedido:</h3>
         {cart.map((item) => (
-          <div key={item.title} className="Payment-item">
-            <div className="payment-elemtent">
+          <div className="Payment-item" key={item.title}>
+            <div className="Payment-element">
               <h4>{item.title}</h4>
               <span>
                 $
@@ -55,20 +53,20 @@ function Payment(history) {
           </div>
         ))}
         <div className="Payment-button">
-          <PayPalButton 
-            paypalOptions={paypalOptions}
+          <PayPalButton
+            paypalOptions={paypalOtions}
             buttonStyles={buttonStyles}
-            amount={handleSumTotal}
+            amount={handleSumTotal()}
             onPaymentStart={() => console.log('Start Payment')}
-            onPaymentSuccess={data = handlePaymentSuccess(data)}
-            onPaymentError={error = console.log(error)}
+            onPaymentSuccess={data => handlePaymentSuccess(data)}
+            onPaymentError={error => console.log(error)}
             onPaymentCancel={data => console.log(data)}
           />
         </div>
       </div>
       <div />
     </div>
-  )
+  );
 }
 
 export default Payment;
